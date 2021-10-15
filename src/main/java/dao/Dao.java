@@ -1,13 +1,15 @@
 package dao;
 
+import java.sql.SQLException;
+
 public interface Dao<T> {
 	
-	T create(T entity);
+	void create(T entity) throws Exception;
 	
-	T update(T entity);
+	void update(T entity) throws Exception;
 	
-	T delete(T entity);
+	void delete(T entity) throws Exception;
 	
-	T getById(Long id);
+	T getById(Long id) throws Exception;
 	
 }
