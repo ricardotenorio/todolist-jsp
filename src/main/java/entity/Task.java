@@ -29,4 +29,6 @@ public class Task {
 	
 	private LocalDateTime createdAt;
 	
+	public Task() {}	
+	
 }
