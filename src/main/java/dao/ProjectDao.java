@@ -1,5 +1,8 @@
 package dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import entity.Project;
@@ -75,6 +78,25 @@ public class ProjectDao implements Dao<Project>{
 		}
 		
 		return foundProject;
+	}
+	
+	public List<Project> getAll() throws Exception {
+		List<Project> projects = new ArrayList<>();
+		EntityManager entityManager = EntityManagerContext.getInstance();
+
+        try {
+			entityManager.getTransaction().begin();
+			projects.addAll(entityManager.createQuery("SELECT p FROM Project p").getResultList());
+			entityManager.getTransaction().commit();
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			System.err.println(e);
+			throw new Exception(e);
+		} finally {
+			entityManager.close();
+		}
+        
+        return projects;
 	}
 	
 }

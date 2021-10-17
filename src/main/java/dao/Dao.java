@@ -1,7 +1,5 @@
 package dao;
 
-import java.sql.SQLException;
-
 public interface Dao<T> {
 	
 	void create(T entity) throws Exception;

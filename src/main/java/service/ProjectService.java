@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import dao.ProjectDao;
 import entity.Project;
 
@@ -25,6 +27,10 @@ public class ProjectService {
 	
 	public Project findProjectById(Long id) throws Exception {
 		return projectDao.getById(id);
+	}
+	
+	public List<Project> findAll() throws Exception {
+		return projectDao.getAll();
 	}
 	
 }
