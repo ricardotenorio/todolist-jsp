@@ -26,13 +26,15 @@
 	
 	<section>
 		Tasks
+		<br>
 		<c:forEach items="${ tasks }" var="task">
 			
-			<a href="/view/${ task.id }">
+			<a href="/todo-list/task/edit?id=${ task.id }">
 				${ task.name }
 				<br>
 				${ task.description }
 			</a>
+			<br>
 			${ task.dueDate }
 			${ task.status }
 			<a href="/todo-list/project/delete?id=${ task.id }">delete</a>

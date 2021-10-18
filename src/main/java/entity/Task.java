@@ -1,5 +1,6 @@
 package entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -28,7 +29,7 @@ public class Task {
 	@Enumerated(EnumType.STRING)
 	private TaskStatus status;
 	
-	private LocalDateTime dueDate;
+	private LocalDate dueDate;
 	
 	private LocalDateTime createdAt;
 	
@@ -38,7 +39,7 @@ public class Task {
 	
 	public Task() {}
 
-	public Task(Long id, String name, String description, TaskStatus status, LocalDateTime dueDate,
+	public Task(Long id, String name, String description, TaskStatus status, LocalDate dueDate,
 			LocalDateTime createdAt, Project project) {
 		super();
 		this.id = id;
@@ -82,11 +83,11 @@ public class Task {
 		this.status = status;
 	}
 
-	public LocalDateTime getDueDate() {
+	public LocalDate getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(LocalDateTime dueDate) {
+	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 

@@ -1,9 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import org.hibernate.type.LocalDateType;
 
 import entity.Project;
 import entity.Task;
@@ -11,6 +10,7 @@ import entity.TaskStatus;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.ProjectService;
@@ -20,7 +20,7 @@ import service.TaskService;
 		name = "taskCreate",
 		urlPatterns = "/task/create"
 		)
-public class TaskCreateController {
+public class TaskCreateController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private final ProjectService projectService = new ProjectService();
@@ -53,7 +53,7 @@ public class TaskCreateController {
 		Task createdTask = new Task();
 		createdTask.setName(name);
 		createdTask.setDescription(description);
-		createdTask.setDueDate(LocalDateTime.parse(date));
+		createdTask.setDueDate(LocalDate.parse(date));
 		createdTask.setCreatedAt(LocalDateTime.now());
 		createdTask.setStatus(TaskStatus.ACTIVE);
 		createdTask.setProject(project);
@@ -61,7 +61,7 @@ public class TaskCreateController {
 		try {
 			taskService.createTask(createdTask);
 			
-			response.sendRedirect("../project/details");
+			response.sendRedirect("../project/details?id=" + project.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

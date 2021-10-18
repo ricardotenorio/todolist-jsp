@@ -29,7 +29,7 @@ public class Project {
 	
 	@OneToMany(
 			mappedBy = "project",
-			fetch = FetchType.LAZY,
+			fetch = FetchType.EAGER,
 	        cascade = {
 	                  CascadeType.PERSIST,
 	                  CascadeType.MERGE,

@@ -1,6 +1,6 @@
 package service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import dao.TaskDao;
 import entity.Task;
@@ -35,7 +35,7 @@ public class TaskService {
 			return task;
 		}
 		
-		if (LocalDateTime.now().isAfter(task.getDueDate())) {
+		if (LocalDate.now().isAfter(task.getDueDate())) {
 			task.setStatus(TaskStatus.OVERDUE);
 			updateTask(task);
 		}

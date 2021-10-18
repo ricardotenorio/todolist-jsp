@@ -1,41 +1,42 @@
 package controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
-import entity.Project;
 import entity.Task;
+import entity.TaskStatus;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import service.ProjectService;
 import service.TaskService;
 
 @WebServlet(
-		name = "projectDetails",
-		urlPatterns = "/project/details"
+		name = "taskEdit",
+		urlPatterns = "/task/edit"
 		)
-public class ProjectDetailsController extends HttpServlet {
+
+public class TaskEditController extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-	private final ProjectService projectService = new ProjectService();
 	private final TaskService taskService = new TaskService();
-	Project project;
+	Task task;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		try {
 			Long id = Long.parseLong(request.getParameter("id"));	
-			project = projectService.findProjectById(id);
-			updateTaskStatus();
-			request.setAttribute("project", project);
-			request.setAttribute("tasks", project.getTasks());
+			task = taskService.findTaskById(id);
+			boolean isCompleted = task.getStatus() == TaskStatus.COMPLETED;
+			request.setAttribute("task", task);
+			request.setAttribute("completed", isCompleted);
 		} catch (Exception e) {	
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("details.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("edit.jsp");
 		
 		dispatcher.forward(request, response);
 	}
@@ -45,24 +46,26 @@ public class ProjectDetailsController extends HttpServlet {
 			throws ServletException, IOException {
 		String name = request.getParameter("name");
 		String description = request.getParameter("description");
+		String date = request.getParameter("date");
+		String status = request.getParameter("status");
 			
-		project.setName(name);
-		project.setDescription(description);
+		task.setName(name);
+		task.setDescription(description);
+		task.setDueDate(LocalDate.parse(date));
 		
-		try {
-			projectService.updateProject(project);
+		if (status != null)
+			task.setStatus(TaskStatus.COMPLETED);
+		else
+			task.setStatus(TaskStatus.ACTIVE);
+		
+		try {			
+			taskService.updateTask(task);
 			
-			response.sendRedirect("../");
+			response.sendRedirect("../project/details?id=" + task.getProject().getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-	private void updateTaskStatus() throws Exception {
-		for (Task task : project.getTasks()) {
-			taskService.updateStatus(task);
-		}
-	}
-
 }

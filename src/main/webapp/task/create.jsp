@@ -21,7 +21,7 @@
 		<label for="task-description">Description</label>
 		<input id="task-description" type="text" name="description">
 		<label for="task-date">Due date</label>
-		<input id="task-date" type="date" name="date">
+		<input id="task-date" placeholder="yyyy-mm-dd" type="date" name="date">
 		
 		<button type="submit">Create</button>
 	</form>
