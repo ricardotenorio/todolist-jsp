@@ -15,8 +15,12 @@
 		<h3>Projects</h3>
 	</header>
 	
+	<br>
+	
 	<a href="/todo-list/project/create">Create new project</a>
 	
+	<br>
+	<br>
 	<br>
 	
 	<c:forEach items="${ projects }" var="project">
@@ -28,6 +32,7 @@
 		<a href="/todo-list/project/edit?id=${ project.id }">edit</a>
 		<a href="/todo-list/project/delete?id=${ project.id }">delete</a>
 		
+		<br>
 		<br>
 	</c:forEach>
 	
