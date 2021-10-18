@@ -19,7 +19,7 @@ import service.ProjectService;
 public class ProjectListController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private ProjectService projectService = new ProjectService();
+	private final ProjectService projectService = new ProjectService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -32,6 +32,7 @@ public class ProjectListController extends HttpServlet {
 			dispatcher.forward(request, response);
 		} catch (Exception e) {
 			System.err.println(e);
+			System.out.println("error");
 		}
 	}
 
