@@ -10,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Task {
@@ -30,10 +32,14 @@ public class Task {
 	
 	private LocalDateTime createdAt;
 	
+	@ManyToOne
+	@JoinColumn(name = "project_id", nullable = false)
+	private Project project;
+	
 	public Task() {}
 
 	public Task(Long id, String name, String description, TaskStatus status, LocalDateTime dueDate,
-			LocalDateTime createdAt) {
+			LocalDateTime createdAt, Project project) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -41,6 +47,7 @@ public class Task {
 		this.status = status;
 		this.dueDate = dueDate;
 		this.createdAt = createdAt;
+		this.project = project;
 	}
 
 	public Long getId() {
@@ -91,9 +98,17 @@ public class Task {
 		this.createdAt = createdAt;
 	}
 
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(createdAt, description, dueDate, id, name, status);
+		return Objects.hash(createdAt, description, dueDate, id, name, project, status);
 	}
 
 	@Override
@@ -107,7 +122,7 @@ public class Task {
 		Task other = (Task) obj;
 		return Objects.equals(createdAt, other.createdAt) && Objects.equals(description, other.description)
 				&& Objects.equals(dueDate, other.dueDate) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name) && status == other.status;
+				&& Objects.equals(name, other.name) && Objects.equals(project, other.project) && status == other.status;
 	}
 	
 }

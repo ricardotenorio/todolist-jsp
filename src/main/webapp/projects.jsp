@@ -21,7 +21,7 @@
 	
 	<c:forEach items="${ projects }" var="project">
 		
-		<a href="/view/${ project.id }">
+		<a href="/todo-list/project/details?id=${ project.id }">
 			${ project.name }
 		</a>
 		${ project.createdAt }

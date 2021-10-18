@@ -1,7 +1,5 @@
 package dao;
 
-import java.sql.SQLException;
-
 import javax.persistence.EntityManager;
 
 import entity.Task;

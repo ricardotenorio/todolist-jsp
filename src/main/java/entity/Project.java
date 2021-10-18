@@ -27,12 +27,14 @@ public class Project {
 	
 	private LocalDateTime createdAt;	
 	
-	@OneToMany(fetch = FetchType.LAZY,
-	          cascade = {
+	@OneToMany(
+			mappedBy = "project",
+			fetch = FetchType.LAZY,
+	        cascade = {
 	                  CascadeType.PERSIST,
 	                  CascadeType.MERGE,
 	                  CascadeType.REMOVE
-	          })
+	        })
 	private List<Task> tasks;
 	
 	public Project() {}
