@@ -13,16 +13,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import service.ProjectService;
 
 @WebServlet(
-		name = "projectCreate",
-		urlPatterns = "/project/create"
+		name = "projectEdit",
+		urlPatterns = "/project/edit"
 		)
-public class ProjectCreateController extends HttpServlet {
+public class ProjectEditController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final ProjectService projectService = new ProjectService();
+	Project projectToBeEdited;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("create.jsp");
+		try {
+			Long id = Long.parseLong(request.getParameter("id"));	
+			projectToBeEdited = projectService.findProjectById(id);
+			request.setAttribute("project", projectToBeEdited);
+		} catch (Exception e) {	
+			e.printStackTrace();
+		}
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("edit.jsp");
 		
 		dispatcher.forward(request, response);
 	}
@@ -33,13 +42,11 @@ public class ProjectCreateController extends HttpServlet {
 		String name = request.getParameter("name");
 		String description = request.getParameter("description");
 			
-		Project createdProject = new Project();
-		createdProject.setName(name);
-		createdProject.setDescription(description);
-		createdProject.setCreatedAt(LocalDateTime.now());
+		projectToBeEdited.setName(name);
+		projectToBeEdited.setDescription(description);
 		
 		try {
-			projectService.createProject(createdProject);
+			projectService.updateProject(projectToBeEdited);
 			
 			response.sendRedirect("../");
 		} catch (Exception e) {

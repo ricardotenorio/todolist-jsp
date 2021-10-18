@@ -25,8 +25,8 @@
 			${ project.name }
 		</a>
 		${ project.createdAt }
-		<a href="/edit/${ project.id }">edit</a>
-		<a href="/delete/${ project.id }">delete</a>
+		<a href="/todo-list/project/edit?id=${ project.id }">edit</a>
+		<a href="/todo-list/project/delete?id=${ project.id }">delete</a>
 		
 		<br>
 	</c:forEach>
